@@ -85,7 +85,6 @@ export default function ManageNFTsPage() {
         artworkRes,
         mintRes,
 		listingsRes,
-        purchasesRes,
       ] = await Promise.all([
 
 		fetch(
@@ -151,11 +150,6 @@ export default function ManageNFTsPage() {
 	  
 	  if (listingsData.success) {
 		  
-		  console.log(
-    "Marketplace History",
-    listingsData
-  );
-
 		setMarketplaceHistory(
 			listingsData.listings || []
 		);
@@ -525,7 +519,7 @@ const filteredMarketplaceHistory =
               <div
                 key={item.ownership_id}
 				onClick={() => {
-				console.log(item);
+
                 setSelectedNFT(item);
                 if (
      item.marketplace_status === "active"  ||
@@ -1605,19 +1599,6 @@ try {
 const verifyData =
   await verifyRes.json();
 
-alert(
-  JSON.stringify(
-    verifyData,
-    null,
-    2
-  )
-);
-
-  alert(
-    "TX SUCCESS"
-  );
-
-
 } catch (err: any) {
 
 console.error(
@@ -1899,11 +1880,6 @@ try{
 
 const checkData =
   await checkRes.json();
-  
-console.log(
-  "CHECK LISTING",
-  checkData
-);
 
 if (!checkData.success) {
 
@@ -1931,14 +1907,6 @@ if (!listingPrice) {
   return;
 }
 
-alert(
-  JSON.stringify(
-    selectedNFT,
-    null,
-    2
-  )
-);
-alert("STEP 1");
 
 const durationSeconds =
   Number(auctionDuration) * 3600;
@@ -1953,84 +1921,6 @@ const listingEndTime =
     )
   );
   
-alert(
-  JSON.stringify(
-    {
-      tokenId:
-        selectedNFT?.token_id,
-
-      collectibleId:
-        selectedNFT?.collectible_id
-    },
-    null,
-    2
-  )
-);
-
-
-alert(
-JSON.stringify({
-  collectibleId:
-    selectedNFT.token_id,
-
-  nftAddress:
-    selectedNFT.nft_address,
-
-  seller:
-    user.wallet_address,
-
-  creator:
-    user.wallet_address,
-
-  platformWallet:
-    process.env.NEXT_PUBLIC_PLATFORM_WALLET,
-
-  usdtMaster:
-    process.env.NEXT_PUBLIC_USDT_MASTER_ADDRESS,
-
- priceUsdt:
-        BigInt(
-            Math.floor(
-                Number(listingPrice) * 1_000_000
-            )
-        ).toString(),
-
-  listingType,
-
-  endTime:
-    Number(listingEndTime)
-},
-null,
-2)
-);
-
-
- alert(
-JSON.stringify({
-  collectibleId:
-    selectedNFT.token_id,
-
-  nftAddress:
-    selectedNFT.nft_address,
-
-  creator:
-    user.wallet_address,
-
-  priceUsdt:
-        BigInt(
-            Math.floor(
-                Number(listingPrice) * 1_000_000
-            )
-        ).toString(),
-
-  listingType,
-
-  endTime:
-    Number(listingEndTime)
-},
-null,
-2)
-);
 
 	  const payload =
 	 
@@ -2062,23 +1952,6 @@ null,
 
   });
   
-  alert(
-  `PAYLOAD:\n${payload}`
-);
-  
-  alert("STEP 2");
-  console.log(
-  "CREATE LISTING PAYLOAD",
-  payload
-);
-
-console.log(
-  "MARKETPLACE ROOT",
-  MARKETPLACE_ROOT_ADDRESS
-);
-  
-  alert("STEP 3");
-
 const tx = await tonConnectUI.sendTransaction({
 
   validUntil:
@@ -2103,49 +1976,6 @@ const tx = await tonConnectUI.sendTransaction({
 });
 
 setShowMarketplaceModal(false);
-
-alert(
-  JSON.stringify(
-    Object.keys(tx),
-    null,
-    2
-  )
-);
-
-alert("STEP 4");
-
-alert(
-  JSON.stringify(
-    {
-      collectible_id:
-        selectedNFT.collectible_id,
-
-      nft_address:
-        selectedNFT.nft_address,
-
-      listing_address:
-        null,
-
-      seller_id:
-        user.id,
-
-      seller_wallet:
-        user.wallet_address,
-
-      creator_wallet:
-        user.wallet_address,
-
-      price_usdt:
-        Number(listingPrice),
-
-      listing_type:
-        Number(listingType)
-
-    },
-    null,
-    2
-  )
-);
 
 const createRes =
   await fetch(
@@ -2215,11 +2045,6 @@ for (
   const data =
     await res.json();
 
-  console.log(
-    "RESOLVE",
-    data
-  );
-
   if (
     data.success
   ) {
@@ -2248,18 +2073,6 @@ if (!listingAddress) {
   return;
 }
 
-alert(
-  listingAddress
-);
-
-alert(
-  JSON.stringify(
-    createData,
-    null,
-    2
-  )
-);
-
       const initRes =
         await fetch(
           `${API_BASE}/api/nft/transfer/init`,
@@ -2283,11 +2096,6 @@ alert(
 
       const initData =
         await initRes.json();
-
-      console.log(
-        "INIT DATA",
-        initData
-      );
 
       if (!initData.success) {
 
@@ -2337,10 +2145,6 @@ alert(
 
 const verifyData =
   await verifyRes.json();
-
-console.log(
-  verifyData
-);
 
 if (!verifyData.success) {
 
@@ -2393,10 +2197,6 @@ if (!verifyData.success) {
 
     const auctionData =
         await auctionRes.json();
-
-    console.log(
-        auctionData
-    );
 
     if (!auctionData.success) {
 
@@ -2590,16 +2390,6 @@ USDT
 
       const initData =
         await initRes.json();
-		
-		console.log(initData);
-
-alert(
-  JSON.stringify(
-    initData,
-    null,
-    2
-  )
-);
 
       if (!initData.success) {
 
