@@ -10,7 +10,7 @@ export default function Providers({
 }) {
   return (
     <TonConnectUIProvider
-      manifestUrl="https://eos-commerce-totally-def.trycloudflare.com/tonconnect-manifest.json"
+      manifestUrl="https://loopcast.bearcrypto18.com/tonconnect-manifest.json"
     >
       <AppDataProvider>
         {children}
