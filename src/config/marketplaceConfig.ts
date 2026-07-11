@@ -1,0 +1,8 @@
+export const MARKETPLACE_ROOT_ADDRESS =
+  process.env.NEXT_PUBLIC_MARKETPLACE_ROOT_ADDRESS!;
+
+if (!MARKETPLACE_ROOT_ADDRESS) {
+  throw new Error(
+    "NEXT_PUBLIC_MARKETPLACE_ROOT_ADDRESS missing"
+  );
+}

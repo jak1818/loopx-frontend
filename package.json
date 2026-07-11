@@ -9,18 +9,27 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emoji-mart/data": "^1.2.1",
+    "@emoji-mart/react": "^1.1.1",
+    "@ton/core": "^0.63.1",
+    "@tonconnect/ui-react": "^2.4.4",
+    "emoji-mart": "^5.6.0",
+    "lucide-react": "^1.14.0",
+    "next": "14.2.35",
+    "next-pwa": "^5.6.0",
     "react": "^18",
     "react-dom": "^18",
-    "next": "14.2.35"
+    "recharts": "^3.8.1",
+    "zustand": "^5.0.12"
   },
   "devDependencies": {
-    "typescript": "^5",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.35",
     "postcss": "^8",
     "tailwindcss": "^3.4.1",
-    "eslint": "^8",
-    "eslint-config-next": "14.2.35"
+    "typescript": "^5"
   }
 }

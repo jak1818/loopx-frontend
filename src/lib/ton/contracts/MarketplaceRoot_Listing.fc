@@ -1,0 +1,555 @@
+#pragma version =0.4.6;
+#pragma allow-post-modification;
+#pragma compute-asm-ltr;
+
+;; MarketplaceRoot_Listing.headers.fc
+;;
+;; Header files for Listing
+;; NOTE: declarations are sorted for optimal order
+;;
+
+;; __tact_store_address_opt
+builder __tact_store_address_opt(builder b, slice address) inline;
+
+;; __tact_context_get_sender
+slice __tact_context_get_sender() inline;
+
+;; $ListingData$_store
+builder $ListingData$_store(builder build_0, (int, slice, slice, slice, slice, slice, slice, int, int, int, int, int, slice, int, int) v) inline_ref;
+
+;; $ListingData$_load
+(slice, ((int, slice, slice, slice, slice, slice, slice, int, int, int, int, int, slice, int, int))) $ListingData$_load(slice sc_0) inline_ref;
+
+;; $Listing$_store
+builder $Listing$_store(builder build_0, ((int, slice, slice, slice, slice, slice, slice, int, int, int, int, int, slice, int, int)) v) inline;
+
+;; $Listing$_load
+(slice, (((int, slice, slice, slice, slice, slice, slice, int, int, int, int, int, slice, int, int)))) $Listing$_load(slice sc_0) inline;
+
+;; $ListingData$_to_external
+(int, slice, slice, slice, slice, slice, slice, int, int, int, int, int, slice, int, int) $ListingData$_to_external(((int, slice, slice, slice, slice, slice, slice, int, int, int, int, int, slice, int, int)) v) inline;
+
+;; $Listing$init$_load
+(slice, (((int, slice, slice, slice, slice, slice, slice, int, int, int, int, int, slice, int, int)))) $Listing$init$_load(slice sc_0) inline;
+
+;; $Listing$_contract_init
+((int, slice, slice, slice, slice, slice, slice, int, int, int, int, int, slice, int, int)) $Listing$_contract_init((int, slice, slice, slice, slice, slice, slice, int, int, int, int, int, slice, int, int) $data) impure inline;
+
+;; $Listing$_contract_load
+((int, slice, slice, slice, slice, slice, slice, int, int, int, int, int, slice, int, int)) $Listing$_contract_load() impure inline;
+
+;; $Listing$_contract_store
+() $Listing$_contract_store(((int, slice, slice, slice, slice, slice, slice, int, int, int, int, int, slice, int, int)) v) impure inline;
+
+;; $Listing$_fun_is_active
+(((int, slice, slice, slice, slice, slice, slice, int, int, int, int, int, slice, int, int)), int) $Listing$_fun_is_active(((int, slice, slice, slice, slice, slice, slice, int, int, int, int, int, slice, int, int)) $self) impure inline_ref;
+
+;; $Listing$_fun_get_seller
+(((int, slice, slice, slice, slice, slice, slice, int, int, int, int, int, slice, int, int)), slice) $Listing$_fun_get_seller(((int, slice, slice, slice, slice, slice, slice, int, int, int, int, int, slice, int, int)) $self) impure inline_ref;
+
+;; $Listing$_fun_get_price
+(((int, slice, slice, slice, slice, slice, slice, int, int, int, int, int, slice, int, int)), int) $Listing$_fun_get_price(((int, slice, slice, slice, slice, slice, slice, int, int, int, int, int, slice, int, int)) $self) impure inline_ref;
+
+;; $Listing$_fun_get_creator
+(((int, slice, slice, slice, slice, slice, slice, int, int, int, int, int, slice, int, int)), slice) $Listing$_fun_get_creator(((int, slice, slice, slice, slice, slice, slice, int, int, int, int, int, slice, int, int)) $self) impure inline_ref;
+
+;; $Listing$_fun_get_listing_data
+(((int, slice, slice, slice, slice, slice, slice, int, int, int, int, int, slice, int, int)), (int, slice, slice, slice, slice, slice, slice, int, int, int, int, int, slice, int, int)) $Listing$_fun_get_listing_data(((int, slice, slice, slice, slice, slice, slice, int, int, int, int, int, slice, int, int)) $self) impure inline_ref;
+
+;; $Listing$_fun_get_fallback_count
+(((int, slice, slice, slice, slice, slice, slice, int, int, int, int, int, slice, int, int)), int) $Listing$_fun_get_fallback_count(((int, slice, slice, slice, slice, slice, slice, int, int, int, int, int, slice, int, int)) $self) impure inline_ref;
+
+;; $Listing$_fun_get_buyer
+(((int, slice, slice, slice, slice, slice, slice, int, int, int, int, int, slice, int, int)), slice) $Listing$_fun_get_buyer(((int, slice, slice, slice, slice, slice, slice, int, int, int, int, int, slice, int, int)) $self) impure inline_ref;
+
+;; $SendParameters$_constructor_to_value_bounce_body
+((int, cell, cell, cell, int, slice, int)) $SendParameters$_constructor_to_value_bounce_body(slice $to, int $value, int $bounce, cell $body) inline;
+
+
+;; MarketplaceRoot_Listing.stdlib.fc
+global (int, slice, int, slice) __tact_context;
+global slice __tact_context_sender;
+global cell __tact_child_contract_codes;
+global int __tact_randomized;
+
+(slice, slice) __tact_load_address_opt(slice cs) asm """
+
+            b{00} SDBEGINSQ
+            IF:<{
+              PUSHNULL
+            }>ELSE<{
+              LDMSGADDR
+              SWAP
+            }>
+
+""";
+
+builder __tact_store_addr_none(builder b) asm "b{00} STSLICECONST";
+
+builder __tact_store_address_opt(builder b, slice address) inline {
+    if (null?(address)) {
+        return __tact_store_addr_none(b);
+    } else {
+        return b.store_slice(address);
+    }
+}
+
+slice __tact_context_get_sender() inline {
+    return __tact_context_sender;
+}
+
+builder $global_beginCell() impure asm """
+    NEWC
+""";
+
+() $global_send((int, cell, cell, cell, int, slice, int) $params) impure asm """
+    NEWC
+    b{01} STSLICECONST  // store tag = $0 and ihr_disabled = true
+    1 STI               // store `bounce`
+    b{000} STSLICECONST // store bounced = false and src = addr_none
+    STSLICE             // store `to`
+    SWAP
+    STGRAMS             // store `value`
+    105 PUSHINT         // 1 + 4 + 4 + 64 + 32
+    STZEROES            // store currency_collection, ihr_fee, fwd_fee, created_lt and created_at
+    // → Stack state
+    // s0: Builder
+    // s1: `data`
+    // s2: `code`
+    // s3: `body`
+    // s4: `mode`
+
+    // Group 2: Placing the Builder after code and data, then checking those for nullability
+    s2 XCHG0
+    DUP2
+    ISNULL
+    SWAP
+    ISNULL
+    AND
+    // → Stack state
+    // s0: -1 (true) if `data` and `code` are both null, 0 (false) otherwise
+    // s1: `code`
+    // s2: `data`
+    // s3: Builder
+    // s4: `body`
+    // s5: `mode`
+
+    // Group 3: Left branch of the IFELSE, executed if s0 is -1 (true)
+    <{
+        DROP2 // drop `data` and `code`, since either of those is null
+        b{0} STSLICECONST
+    }> PUSHCONT
+
+    // Group 3: Right branch of the IFELSE, executed if s0 is 0 (false)
+    <{
+        // _ split_depth:(Maybe (## 5))
+        //   special:(Maybe TickTock)
+        //   code:(Maybe ^Cell)
+        //   data:(Maybe ^Cell)
+        //   library:(Maybe ^Cell)
+        // = StateInit;
+        ROT                // place message Builder on top
+        b{10} STSLICECONST // store Maybe = true, Either = false
+        // Start composing inlined StateInit
+        b{00} STSLICECONST // store split_depth and special first
+        STDICT             // store code
+        STDICT             // store data
+        b{0} STSLICECONST  // store library
+    }> PUSHCONT
+
+    // Group 3: IFELSE that does the branching shown above
+    IFELSE
+    // → Stack state
+    // s0: Builder
+    // s1: null or StateInit
+    // s2: `body`
+    // s3: `mode`
+
+    // Group 4: Finalizing the message
+    STDICT // store `body` as ref with an extra Maybe bit, since `body` might be null
+    ENDC
+    // → Stack state
+    // s0: Cell
+    // s1: `mode`
+
+    // Group 5: Sending the message, with `mode` on top
+    SWAP
+    SENDRAWMSG // https://github.com/tact-lang/tact/issues/1558
+""";
+
+builder $Builder$_fun_storeBit(int $value, builder $self) impure asm """
+    1 STI
+""";
+
+builder $Builder$_fun_storeCoins(builder $self, int $value) impure asm """
+    STVARUINT16
+""";
+
+cell $Builder$_fun_endCell(builder $self) impure asm """
+    ENDC
+""";
+
+builder $Builder$_fun_storeAddress(builder $self, slice $address) impure asm """
+    STSLICER
+""";
+
+;; MarketplaceRoot_Listing.storage.fc
+;;
+;; Type: SendParameters
+;; TLB: _ mode:int257 body:Maybe ^cell code:Maybe ^cell data:Maybe ^cell value:int257 to:address bounce:bool = SendParameters
+;;
+
+((int, cell, cell, cell, int, slice, int)) $SendParameters$_constructor_to_value_bounce_body(slice $to, int $value, int $bounce, cell $body) inline {
+    return (0, $body, null(), null(), $value, $to, $bounce);
+}
+
+;;
+;; Type: ListingData
+;; TLB: _ collectibleId:int257 nftAddress:address seller:address creator:address buyer:address platformWallet:address usdtMaster:address priceUsdt:int257 listingType:int257 endTime:int257 active:bool highestBid:int257 highestBidder:address ownershipAssignedCount:int257 fallbackCount:int257 = ListingData
+;;
+
+builder $ListingData$_store(builder build_0, (int, slice, slice, slice, slice, slice, slice, int, int, int, int, int, slice, int, int) v) inline_ref {
+    var (v'collectibleId, v'nftAddress, v'seller, v'creator, v'buyer, v'platformWallet, v'usdtMaster, v'priceUsdt, v'listingType, v'endTime, v'active, v'highestBid, v'highestBidder, v'ownershipAssignedCount, v'fallbackCount) = v;
+    build_0 = build_0.store_int(v'collectibleId, 257);
+    build_0 = build_0.store_slice(v'nftAddress);
+    build_0 = build_0.store_slice(v'seller);
+    var build_1 = begin_cell();
+    build_1 = build_1.store_slice(v'creator);
+    build_1 = __tact_store_address_opt(build_1, v'buyer);
+    build_1 = build_1.store_slice(v'platformWallet);
+    var build_2 = begin_cell();
+    build_2 = build_2.store_slice(v'usdtMaster);
+    build_2 = build_2.store_int(v'priceUsdt, 257);
+    build_2 = build_2.store_int(v'listingType, 257);
+    var build_3 = begin_cell();
+    build_3 = build_3.store_int(v'endTime, 257);
+    build_3 = build_3.store_int(v'active, 1);
+    build_3 = build_3.store_int(v'highestBid, 257);
+    build_3 = __tact_store_address_opt(build_3, v'highestBidder);
+    var build_4 = begin_cell();
+    build_4 = build_4.store_int(v'ownershipAssignedCount, 257);
+    build_4 = build_4.store_int(v'fallbackCount, 257);
+    build_3 = store_builder_ref(build_3, build_4);
+    build_2 = store_builder_ref(build_2, build_3);
+    build_1 = store_builder_ref(build_1, build_2);
+    build_0 = store_builder_ref(build_0, build_1);
+    return build_0;
+}
+
+(slice, ((int, slice, slice, slice, slice, slice, slice, int, int, int, int, int, slice, int, int))) $ListingData$_load(slice sc_0) inline_ref {
+    var v'collectibleId = sc_0~load_int(257);
+    var v'nftAddress = sc_0~load_msg_addr();
+    var v'seller = sc_0~load_msg_addr();
+    slice sc_1 = sc_0~load_ref().begin_parse();
+    var v'creator = sc_1~load_msg_addr();
+    var v'buyer = sc_1~__tact_load_address_opt();
+    var v'platformWallet = sc_1~load_msg_addr();
+    slice sc_2 = sc_1~load_ref().begin_parse();
+    var v'usdtMaster = sc_2~load_msg_addr();
+    var v'priceUsdt = sc_2~load_int(257);
+    var v'listingType = sc_2~load_int(257);
+    slice sc_3 = sc_2~load_ref().begin_parse();
+    var v'endTime = sc_3~load_int(257);
+    var v'active = sc_3~load_int(1);
+    var v'highestBid = sc_3~load_int(257);
+    var v'highestBidder = sc_3~__tact_load_address_opt();
+    slice sc_4 = sc_3~load_ref().begin_parse();
+    var v'ownershipAssignedCount = sc_4~load_int(257);
+    var v'fallbackCount = sc_4~load_int(257);
+    return (sc_0, (v'collectibleId, v'nftAddress, v'seller, v'creator, v'buyer, v'platformWallet, v'usdtMaster, v'priceUsdt, v'listingType, v'endTime, v'active, v'highestBid, v'highestBidder, v'ownershipAssignedCount, v'fallbackCount));
+}
+
+(int, slice, slice, slice, slice, slice, slice, int, int, int, int, int, slice, int, int) $ListingData$_to_external(((int, slice, slice, slice, slice, slice, slice, int, int, int, int, int, slice, int, int)) v) inline {
+    var (v'collectibleId, v'nftAddress, v'seller, v'creator, v'buyer, v'platformWallet, v'usdtMaster, v'priceUsdt, v'listingType, v'endTime, v'active, v'highestBid, v'highestBidder, v'ownershipAssignedCount, v'fallbackCount) = v; 
+    return (v'collectibleId, v'nftAddress, v'seller, v'creator, v'buyer, v'platformWallet, v'usdtMaster, v'priceUsdt, v'listingType, v'endTime, v'active, v'highestBid, v'highestBidder, v'ownershipAssignedCount, v'fallbackCount);
+}
+
+;;
+;; Type: Listing
+;; TLB: _ data:ListingData{collectibleId:int257,nftAddress:address,seller:address,creator:address,buyer:address,platformWallet:address,usdtMaster:address,priceUsdt:int257,listingType:int257,endTime:int257,active:bool,highestBid:int257,highestBidder:address,ownershipAssignedCount:int257,fallbackCount:int257} = Listing
+;;
+
+builder $Listing$_store(builder build_0, ((int, slice, slice, slice, slice, slice, slice, int, int, int, int, int, slice, int, int)) v) inline {
+    var ((v'data'collectibleId, v'data'nftAddress, v'data'seller, v'data'creator, v'data'buyer, v'data'platformWallet, v'data'usdtMaster, v'data'priceUsdt, v'data'listingType, v'data'endTime, v'data'active, v'data'highestBid, v'data'highestBidder, v'data'ownershipAssignedCount, v'data'fallbackCount)) = v;
+    build_0 = $ListingData$_store(build_0, (v'data'collectibleId, v'data'nftAddress, v'data'seller, v'data'creator, v'data'buyer, v'data'platformWallet, v'data'usdtMaster, v'data'priceUsdt, v'data'listingType, v'data'endTime, v'data'active, v'data'highestBid, v'data'highestBidder, v'data'ownershipAssignedCount, v'data'fallbackCount));
+    return build_0;
+}
+
+(slice, (((int, slice, slice, slice, slice, slice, slice, int, int, int, int, int, slice, int, int)))) $Listing$_load(slice sc_0) inline {
+    var v'data = sc_0~$ListingData$_load();
+    return (sc_0, (v'data));
+}
+
+(slice, (((int, slice, slice, slice, slice, slice, slice, int, int, int, int, int, slice, int, int)))) $Listing$init$_load(slice sc_0) inline {
+    var v'data = sc_0~$ListingData$_load();
+    return (sc_0, (v'data));
+}
+
+((int, slice, slice, slice, slice, slice, slice, int, int, int, int, int, slice, int, int)) $Listing$_contract_load() impure inline {
+    slice $sc = get_data().begin_parse();
+    int $loaded = $sc~load_int(1);
+    if ($loaded) {
+        return $sc~$Listing$_load();
+    }
+    else {
+        ((int, slice, slice, slice, slice, slice, slice, int, int, int, int, int, slice, int, int) $data) = $sc~$Listing$init$_load();
+        $sc.end_parse();
+        return $Listing$_contract_init($data);
+    }
+}
+
+() $Listing$_contract_store(((int, slice, slice, slice, slice, slice, slice, int, int, int, int, int, slice, int, int)) v) impure inline {
+    builder b = begin_cell();
+    b = b.store_int(true, 1);
+    b = $Listing$_store(b, v);
+    set_data(b.end_cell());
+}
+
+;;
+;; Contract Listing functions
+;;
+
+((int, slice, slice, slice, slice, slice, slice, int, int, int, int, int, slice, int, int)) $Listing$_contract_init((int, slice, slice, slice, slice, slice, slice, int, int, int, int, int, slice, int, int) $data) impure inline {
+    var (($data'collectibleId, $data'nftAddress, $data'seller, $data'creator, $data'buyer, $data'platformWallet, $data'usdtMaster, $data'priceUsdt, $data'listingType, $data'endTime, $data'active, $data'highestBid, $data'highestBidder, $data'ownershipAssignedCount, $data'fallbackCount)) = $data;
+    var ((($self'data'collectibleId, $self'data'nftAddress, $self'data'seller, $self'data'creator, $self'data'buyer, $self'data'platformWallet, $self'data'usdtMaster, $self'data'priceUsdt, $self'data'listingType, $self'data'endTime, $self'data'active, $self'data'highestBid, $self'data'highestBidder, $self'data'ownershipAssignedCount, $self'data'fallbackCount))) = (null());
+    ($self'data'collectibleId, $self'data'nftAddress, $self'data'seller, $self'data'creator, $self'data'buyer, $self'data'platformWallet, $self'data'usdtMaster, $self'data'priceUsdt, $self'data'listingType, $self'data'endTime, $self'data'active, $self'data'highestBid, $self'data'highestBidder, $self'data'ownershipAssignedCount, $self'data'fallbackCount) = ($data'collectibleId, $data'nftAddress, $data'seller, $data'creator, $data'buyer, $data'platformWallet, $data'usdtMaster, $data'priceUsdt, $data'listingType, $data'endTime, $data'active, $data'highestBid, $data'highestBidder, $data'ownershipAssignedCount, $data'fallbackCount);
+    return (($self'data'collectibleId, $self'data'nftAddress, $self'data'seller, $self'data'creator, $self'data'buyer, $self'data'platformWallet, $self'data'usdtMaster, $self'data'priceUsdt, $self'data'listingType, $self'data'endTime, $self'data'active, $self'data'highestBid, $self'data'highestBidder, $self'data'ownershipAssignedCount, $self'data'fallbackCount));
+}
+
+(((int, slice, slice, slice, slice, slice, slice, int, int, int, int, int, slice, int, int)), int) $Listing$_fun_is_active(((int, slice, slice, slice, slice, slice, slice, int, int, int, int, int, slice, int, int)) $self) impure inline_ref {
+    var ((($self'data'collectibleId, $self'data'nftAddress, $self'data'seller, $self'data'creator, $self'data'buyer, $self'data'platformWallet, $self'data'usdtMaster, $self'data'priceUsdt, $self'data'listingType, $self'data'endTime, $self'data'active, $self'data'highestBid, $self'data'highestBidder, $self'data'ownershipAssignedCount, $self'data'fallbackCount))) = $self;
+    var $fresh$ret_0 = $self'data'active;
+    return ((($self'data'collectibleId, $self'data'nftAddress, $self'data'seller, $self'data'creator, $self'data'buyer, $self'data'platformWallet, $self'data'usdtMaster, $self'data'priceUsdt, $self'data'listingType, $self'data'endTime, $self'data'active, $self'data'highestBid, $self'data'highestBidder, $self'data'ownershipAssignedCount, $self'data'fallbackCount)), $fresh$ret_0);
+}
+
+(((int, slice, slice, slice, slice, slice, slice, int, int, int, int, int, slice, int, int)), slice) $Listing$_fun_get_seller(((int, slice, slice, slice, slice, slice, slice, int, int, int, int, int, slice, int, int)) $self) impure inline_ref {
+    var ((($self'data'collectibleId, $self'data'nftAddress, $self'data'seller, $self'data'creator, $self'data'buyer, $self'data'platformWallet, $self'data'usdtMaster, $self'data'priceUsdt, $self'data'listingType, $self'data'endTime, $self'data'active, $self'data'highestBid, $self'data'highestBidder, $self'data'ownershipAssignedCount, $self'data'fallbackCount))) = $self;
+    var $fresh$ret_1 = $self'data'seller;
+    return ((($self'data'collectibleId, $self'data'nftAddress, $self'data'seller, $self'data'creator, $self'data'buyer, $self'data'platformWallet, $self'data'usdtMaster, $self'data'priceUsdt, $self'data'listingType, $self'data'endTime, $self'data'active, $self'data'highestBid, $self'data'highestBidder, $self'data'ownershipAssignedCount, $self'data'fallbackCount)), $fresh$ret_1);
+}
+
+(((int, slice, slice, slice, slice, slice, slice, int, int, int, int, int, slice, int, int)), int) $Listing$_fun_get_price(((int, slice, slice, slice, slice, slice, slice, int, int, int, int, int, slice, int, int)) $self) impure inline_ref {
+    var ((($self'data'collectibleId, $self'data'nftAddress, $self'data'seller, $self'data'creator, $self'data'buyer, $self'data'platformWallet, $self'data'usdtMaster, $self'data'priceUsdt, $self'data'listingType, $self'data'endTime, $self'data'active, $self'data'highestBid, $self'data'highestBidder, $self'data'ownershipAssignedCount, $self'data'fallbackCount))) = $self;
+    var $fresh$ret_2 = $self'data'priceUsdt;
+    return ((($self'data'collectibleId, $self'data'nftAddress, $self'data'seller, $self'data'creator, $self'data'buyer, $self'data'platformWallet, $self'data'usdtMaster, $self'data'priceUsdt, $self'data'listingType, $self'data'endTime, $self'data'active, $self'data'highestBid, $self'data'highestBidder, $self'data'ownershipAssignedCount, $self'data'fallbackCount)), $fresh$ret_2);
+}
+
+(((int, slice, slice, slice, slice, slice, slice, int, int, int, int, int, slice, int, int)), slice) $Listing$_fun_get_creator(((int, slice, slice, slice, slice, slice, slice, int, int, int, int, int, slice, int, int)) $self) impure inline_ref {
+    var ((($self'data'collectibleId, $self'data'nftAddress, $self'data'seller, $self'data'creator, $self'data'buyer, $self'data'platformWallet, $self'data'usdtMaster, $self'data'priceUsdt, $self'data'listingType, $self'data'endTime, $self'data'active, $self'data'highestBid, $self'data'highestBidder, $self'data'ownershipAssignedCount, $self'data'fallbackCount))) = $self;
+    var $fresh$ret_3 = $self'data'creator;
+    return ((($self'data'collectibleId, $self'data'nftAddress, $self'data'seller, $self'data'creator, $self'data'buyer, $self'data'platformWallet, $self'data'usdtMaster, $self'data'priceUsdt, $self'data'listingType, $self'data'endTime, $self'data'active, $self'data'highestBid, $self'data'highestBidder, $self'data'ownershipAssignedCount, $self'data'fallbackCount)), $fresh$ret_3);
+}
+
+(((int, slice, slice, slice, slice, slice, slice, int, int, int, int, int, slice, int, int)), (int, slice, slice, slice, slice, slice, slice, int, int, int, int, int, slice, int, int)) $Listing$_fun_get_listing_data(((int, slice, slice, slice, slice, slice, slice, int, int, int, int, int, slice, int, int)) $self) impure inline_ref {
+    var ((($self'data'collectibleId, $self'data'nftAddress, $self'data'seller, $self'data'creator, $self'data'buyer, $self'data'platformWallet, $self'data'usdtMaster, $self'data'priceUsdt, $self'data'listingType, $self'data'endTime, $self'data'active, $self'data'highestBid, $self'data'highestBidder, $self'data'ownershipAssignedCount, $self'data'fallbackCount))) = $self;
+    var $fresh$ret_4 = ($self'data'collectibleId, $self'data'nftAddress, $self'data'seller, $self'data'creator, $self'data'buyer, $self'data'platformWallet, $self'data'usdtMaster, $self'data'priceUsdt, $self'data'listingType, $self'data'endTime, $self'data'active, $self'data'highestBid, $self'data'highestBidder, $self'data'ownershipAssignedCount, $self'data'fallbackCount);
+    return ((($self'data'collectibleId, $self'data'nftAddress, $self'data'seller, $self'data'creator, $self'data'buyer, $self'data'platformWallet, $self'data'usdtMaster, $self'data'priceUsdt, $self'data'listingType, $self'data'endTime, $self'data'active, $self'data'highestBid, $self'data'highestBidder, $self'data'ownershipAssignedCount, $self'data'fallbackCount)), $fresh$ret_4);
+}
+
+(((int, slice, slice, slice, slice, slice, slice, int, int, int, int, int, slice, int, int)), int) $Listing$_fun_get_fallback_count(((int, slice, slice, slice, slice, slice, slice, int, int, int, int, int, slice, int, int)) $self) impure inline_ref {
+    var ((($self'data'collectibleId, $self'data'nftAddress, $self'data'seller, $self'data'creator, $self'data'buyer, $self'data'platformWallet, $self'data'usdtMaster, $self'data'priceUsdt, $self'data'listingType, $self'data'endTime, $self'data'active, $self'data'highestBid, $self'data'highestBidder, $self'data'ownershipAssignedCount, $self'data'fallbackCount))) = $self;
+    var $fresh$ret_5 = $self'data'fallbackCount;
+    return ((($self'data'collectibleId, $self'data'nftAddress, $self'data'seller, $self'data'creator, $self'data'buyer, $self'data'platformWallet, $self'data'usdtMaster, $self'data'priceUsdt, $self'data'listingType, $self'data'endTime, $self'data'active, $self'data'highestBid, $self'data'highestBidder, $self'data'ownershipAssignedCount, $self'data'fallbackCount)), $fresh$ret_5);
+}
+
+(((int, slice, slice, slice, slice, slice, slice, int, int, int, int, int, slice, int, int)), slice) $Listing$_fun_get_buyer(((int, slice, slice, slice, slice, slice, slice, int, int, int, int, int, slice, int, int)) $self) impure inline_ref {
+    var ((($self'data'collectibleId, $self'data'nftAddress, $self'data'seller, $self'data'creator, $self'data'buyer, $self'data'platformWallet, $self'data'usdtMaster, $self'data'priceUsdt, $self'data'listingType, $self'data'endTime, $self'data'active, $self'data'highestBid, $self'data'highestBidder, $self'data'ownershipAssignedCount, $self'data'fallbackCount))) = $self;
+    var $fresh$ret_6 = $self'data'buyer;
+    return ((($self'data'collectibleId, $self'data'nftAddress, $self'data'seller, $self'data'creator, $self'data'buyer, $self'data'platformWallet, $self'data'usdtMaster, $self'data'priceUsdt, $self'data'listingType, $self'data'endTime, $self'data'active, $self'data'highestBid, $self'data'highestBidder, $self'data'ownershipAssignedCount, $self'data'fallbackCount)), $fresh$ret_6);
+}
+
+;;
+;; Get methods of a Contract Listing
+;;
+
+_ %is_active() method_id(122058) {
+    var self = $Listing$_contract_load();
+    var res = self~$Listing$_fun_is_active();
+    return res;
+}
+
+_ %get_seller() method_id(123916) {
+    var self = $Listing$_contract_load();
+    var res = self~$Listing$_fun_get_seller();
+    return res;
+}
+
+_ %get_price() method_id(108963) {
+    var self = $Listing$_contract_load();
+    var res = self~$Listing$_fun_get_price();
+    return res;
+}
+
+_ %get_creator() method_id(105031) {
+    var self = $Listing$_contract_load();
+    var res = self~$Listing$_fun_get_creator();
+    return res;
+}
+
+_ %get_listing_data() method_id(97721) {
+    var self = $Listing$_contract_load();
+    var res = self~$Listing$_fun_get_listing_data();
+    return $ListingData$_to_external(res);
+}
+
+_ %get_fallback_count() method_id(89458) {
+    var self = $Listing$_contract_load();
+    var res = self~$Listing$_fun_get_fallback_count();
+    return res;
+}
+
+_ %get_buyer() method_id(78660) {
+    var self = $Listing$_contract_load();
+    var res = self~$Listing$_fun_get_buyer();
+    return res;
+}
+
+;;
+;; Routing of a Contract Listing
+;;
+
+
+() recv_internal(int msg_value, cell in_msg_cell, slice in_msg) impure {
+    
+    ;; Context
+    var cs = in_msg_cell.begin_parse();
+    cs~skip_bits(2);
+    var msg_bounceable = cs~load_int(1);
+    var msg_bounced = cs~load_int(1);
+    slice msg_sender_addr = cs~load_msg_addr();
+    __tact_context = (msg_bounceable, msg_sender_addr, msg_value, cs);
+    __tact_context_sender = msg_sender_addr;
+    
+    ;; Load contract data
+    var (($self'data'collectibleId, $self'data'nftAddress, $self'data'seller, $self'data'creator, $self'data'buyer, $self'data'platformWallet, $self'data'usdtMaster, $self'data'priceUsdt, $self'data'listingType, $self'data'endTime, $self'data'active, $self'data'highestBid, $self'data'highestBidder, $self'data'ownershipAssignedCount, $self'data'fallbackCount)) = $Listing$_contract_load();
+    
+    ;; Handle bounced messages
+    if (msg_bounced) { return (); }
+    int op = 0;
+    int in_msg_length = slice_bits(in_msg);
+    if (in_msg_length >= 32) {
+        op = in_msg.preload_uint(32);
+    }
+    ;; Receive CancelListing message
+    if (op == 3137586877) {
+        in_msg~skip_bits(32);
+        var $msg = empty_tuple();
+        throw_unless(30531, $self'data'active);
+        throw_unless(2374, ( equal_slices_bits(__tact_context_get_sender(), $self'data'seller) ));
+        cell $body = $Builder$_fun_endCell($Builder$_fun_storeBit(false, $Builder$_fun_storeCoins($Builder$_fun_storeBit(false, $Builder$_fun_storeAddress($Builder$_fun_storeAddress(store_uint(store_uint($global_beginCell(), 1607220500, 32), 0, 64), $self'data'seller), $self'data'seller)), 1000000)));
+        $global_send($SendParameters$_constructor_to_value_bounce_body($self'data'nftAddress, 50000000, true, $body));
+        $self'data'active = false;
+        $Listing$_contract_store((($self'data'collectibleId, $self'data'nftAddress, $self'data'seller, $self'data'creator, $self'data'buyer, $self'data'platformWallet, $self'data'usdtMaster, $self'data'priceUsdt, $self'data'listingType, $self'data'endTime, $self'data'active, $self'data'highestBid, $self'data'highestBidder, $self'data'ownershipAssignedCount, $self'data'fallbackCount)));
+        return ();
+    }
+    
+    ;; Receive BuyNFT message
+    if (op == 1300740350) {
+        in_msg~skip_bits(32);
+        var $msg = empty_tuple();
+        throw_unless(30531, $self'data'active);
+        slice $buyer = __tact_context_get_sender();
+        $self'data'buyer = $buyer;
+        cell $body = $Builder$_fun_endCell($Builder$_fun_storeBit(false, $Builder$_fun_storeCoins($Builder$_fun_storeBit(false, $Builder$_fun_storeAddress($Builder$_fun_storeAddress(store_uint(store_uint($global_beginCell(), 1607220500, 32), 0, 64), $buyer), $buyer)), 1000000)));
+        $global_send($SendParameters$_constructor_to_value_bounce_body($self'data'nftAddress, 50000000, true, $body));
+        $self'data'active = false;
+        $Listing$_contract_store((($self'data'collectibleId, $self'data'nftAddress, $self'data'seller, $self'data'creator, $self'data'buyer, $self'data'platformWallet, $self'data'usdtMaster, $self'data'priceUsdt, $self'data'listingType, $self'data'endTime, $self'data'active, $self'data'highestBid, $self'data'highestBidder, $self'data'ownershipAssignedCount, $self'data'fallbackCount)));
+        return ();
+    }
+    
+    ;; Receive empty message
+    if ((op == 0) & (in_msg_length <= 32)) {
+        $Listing$_contract_store((($self'data'collectibleId, $self'data'nftAddress, $self'data'seller, $self'data'creator, $self'data'buyer, $self'data'platformWallet, $self'data'usdtMaster, $self'data'priceUsdt, $self'data'listingType, $self'data'endTime, $self'data'active, $self'data'highestBid, $self'data'highestBidder, $self'data'ownershipAssignedCount, $self'data'fallbackCount)));
+        return ();
+    }
+    ;; Receiver fallback
+    slice $slice = in_msg;
+    throw_unless(54167, ( equal_slices_bits(__tact_context_get_sender(), $self'data'nftAddress) ));
+    $self'data'fallbackCount = $self'data'fallbackCount + 1;
+    $self'data'active = true;
+    $self'data'ownershipAssignedCount = $self'data'ownershipAssignedCount + 1;
+    $Listing$_contract_store((($self'data'collectibleId, $self'data'nftAddress, $self'data'seller, $self'data'creator, $self'data'buyer, $self'data'platformWallet, $self'data'usdtMaster, $self'data'priceUsdt, $self'data'listingType, $self'data'endTime, $self'data'active, $self'data'highestBid, $self'data'highestBidder, $self'data'ownershipAssignedCount, $self'data'fallbackCount)));
+}
+
+
+() __tact_selector_hack_asm() impure asm """
+@atend @ 1 {
+        execute current@ context@ current!
+        {
+            // The core idea of this function is to save gas by avoiding unnecessary dict jump, when recv_internal/recv_external is called
+            // We want to extract recv_internal/recv_external from the dict and select needed function
+            // not by jumping to the needed function by it's index, but by using usual IF statements.
+
+            }END> b> // Close previous builder, now we have a cell of previous code on top of the stack
+
+            <{ // Start of the new code builder
+                SETCP0
+                // Swap the new code builder with the previous code, now we have previous code on top of the stack
+                swap
+                // Transform cell to slice and load first ref from the previous code, now we have the dict on top of the stack
+                <s ref@
+
+                // Extract the recv_internal from the dict
+                dup 0 swap @procdictkeylen idict@ { "internal shortcut error" abort } ifnot
+                swap
+
+                // Delete the recv_internal from the dict
+                0 swap @procdictkeylen idict- drop
+                // Delete the recv_external from the dict (it's okay if it's not there)
+                -1 swap @procdictkeylen idict- drop
+                // Delete the __tact_selector_hack from the dict
+                65535 swap @procdictkeylen idict- drop
+
+                // Bring the code builder from the bottom of the stack
+                // because if recv_external extraction is optional, and the number of elements on the stack is not fixed
+                depth 1- roll
+                // Swap with the dict from which we extracted recv_internal and (maybe) recv_external
+                swap
+
+                // Check if the dict is empty
+                dup null?
+                // Store a copy of this flag in the bottom of the stack
+                dup depth 1- -roll
+                {
+                    // If the dict is empty, just drop it (it will be null if it's empty)
+                    drop
+                }
+                {
+                    // If the dict is not empty, prepare continuation to be stored in c3
+                    <{
+                        // Save this dict as first ref in this continuation, it will be pushed in runtime by DICTPUSHCONST
+                        swap @procdictkeylen DICTPUSHCONST
+                        // Jump to the needed function by it's index
+                        DICTIGETJMPZ
+                        // If such key is not found, throw 11 along with the key as an argument
+                        11 THROWARG
+                    }> PUSHCONT
+                    // Store the continuation in c3
+                    c3 POP
+                } cond
+
+                // Function id is on top of the (runtime) stack
+                DUP IFNOTJMP:<{
+                    // place recv_internal here
+                    DROP swap @addop
+                }>
+
+                // Bring back the flag, indicating if the dict is empty or not from the bottom of the stack
+                depth 1- roll
+                {
+                    // If the dict is empty, throw 11
+                    11 THROWARG
+                }
+                {
+                    // If the dict is not empty, jump to continuation from c3
+                    c3 PUSH JMPX
+                } cond
+            }> b>
+        } : }END>c
+        current@ context! current!
+    } does @atend !
+""";
+
+() __tact_selector_hack() method_id(65535) {
+    return __tact_selector_hack_asm();
+}

@@ -1,0 +1,109 @@
+/* app/inbox/page.module.css */
+
+.inboxPage {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 16px;
+
+  height: 100%;
+  overflow-y: auto;
+
+  padding-bottom: 100px;
+
+  -webkit-overflow-scrolling: touch;
+}
+
+.header {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.notificationItem {
+  display: flex;
+  align-items: flex-start;
+  padding: 12px 0;
+  border-bottom: 1px solid #f3f4f6;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.notificationItem:hover {
+  background: #fafafa;
+}
+
+.notificationItem:active {
+  background: #f0f0f0;
+}
+
+.unread {
+  background: #f0f7ff;
+}
+
+.actorAvatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  margin-right: 12px;
+  object-fit: cover;
+  flex-shrink: 0;
+  background: #e5e7eb; /* fallback color */
+}
+
+.notificationContent {
+  flex: 1;
+  min-width: 0;
+}
+
+.notificationText {
+  margin: 0 0 4px;
+  font-size: 14px;
+  line-height: 1.4;
+  color: #111827;
+}
+
+.notificationText strong {
+  font-weight: 600;
+}
+
+.notificationTime {
+  font-size: 12px;
+  color: #9ca3af;
+}
+
+.loadMoreBtn {
+  display: block;
+  margin: 24px auto 0;
+  padding: 10px 32px;
+  background: #111827;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.loadMoreBtn:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+}
+
+.loadMoreBtn:not(:disabled):hover {
+  background: #1f2937;
+}
+
+.emptyText {
+  text-align: center;
+  color: #9ca3af;
+  margin-top: 48px;
+  font-size: 14px;
+}
+
+.loadingText {
+  text-align: center;
+  color: #9ca3af;
+  margin-top: 24px;
+}
