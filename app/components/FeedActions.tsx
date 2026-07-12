@@ -1,6 +1,6 @@
 "use client";
 
-import { Bookmark, Share2 } from "lucide-react";
+import { Bookmark, Share2, Gift } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React from "react";
 
@@ -220,19 +220,29 @@ function FeedActions({
 
       </div>
 
-      {/* Gift */}
-      <button
-        onClick={(e) => {
+     {/* Gift */}
+<div
+  onClick={(e) => {
 
-          e.stopPropagation();
+    e.stopPropagation();
 
-          handleGift(feedItem);
+    handleGift(feedItem);
 
-        }}
-        className="bg-pink-500 px-3 py-2 rounded-full text-white text-sm"
-      >
-        🌹
-      </button>
+  }}
+  className="flex flex-col items-center text-white cursor-pointer"
+>
+
+  <Gift
+    className="
+      w-8
+      h-8
+      text-pink-400
+      hover:scale-110
+      transition
+    "
+  />
+
+</div>
 
       {/* Bookmark */}
       <div
