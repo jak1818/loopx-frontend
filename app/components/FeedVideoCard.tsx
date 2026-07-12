@@ -120,8 +120,11 @@ function FeedVideoCard({
   return (
     <div
       data-video-index={index}
+	      style={{
+      borderTop: "5px solid red",
+    }}
       className={`
-         h-screen
+        h-[100dvh]
         w-full
         snap-start
         snap-always
