@@ -222,7 +222,7 @@ function FeedVideoCard({
         }}
         data-id={feedItem.id}
         src={feedItem.video_url}
-        className="w-full h-full object-contain"
+        className="absolute inset-0 w-full h-full object-contain"
         loop
         muted={isMuted}
         playsInline
