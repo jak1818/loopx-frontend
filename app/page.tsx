@@ -514,8 +514,6 @@ className={`
   h-[100dvh]
   w-full
   overflow-y-auto
-  snap-y
-  snap-mandatory
   overscroll-none
   bg-black
 `}
