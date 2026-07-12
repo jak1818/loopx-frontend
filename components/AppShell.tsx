@@ -73,7 +73,7 @@ const shouldHideBottomNav =
   ? (
       shouldHideBottomNav
         ? "h-[100dvh] overflow-hidden"
-        : "h-[100dvh] overflow-hidden"
+        : "h-[100dvh] overflow-hidden pb-24"
     )
   : (
       shouldHideBottomNav

@@ -236,7 +236,7 @@ function FeedActions({
     className="
       w-8
       h-8
-      text-pink-400
+      text-white-400
       hover:scale-110
       transition
     "

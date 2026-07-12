@@ -121,7 +121,7 @@ function FeedVideoCard({
     <div
       data-video-index={index}
       className={`
-        h-[100dvh]
+         h-screen
         w-full
         snap-start
         snap-always
