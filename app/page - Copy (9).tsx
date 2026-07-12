@@ -95,6 +95,7 @@ function FeedPage() {
   const [activeVideoId, setActiveVideoId,] = useState<string | null>(null);
   const manuallyPausedRef = useRef<Record<string, boolean>>({});
 
+
   // 静音状态（按索引存储）
   const [isMuted, setIsMuted] = useState(true);
   const handleToggleMute =
@@ -137,6 +138,16 @@ const endpoint = useMemo(
       : "/api/feed",
   [isFollowingTab]
 );
+
+useEffect(() => {
+
+  console.log("✅ Feed mounted");
+
+  return () => {
+    console.log("❌ Feed unmounted");
+  };
+
+}, []);
 
   // 组件卸载清理
 useEffect(() => {
